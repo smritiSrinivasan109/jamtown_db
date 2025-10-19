@@ -1,5 +1,3 @@
-# artist_match_app.py
-
 import os
 import streamlit as st
 import numpy as np
@@ -41,18 +39,12 @@ def ensure_vector_extension():
         conn.commit()
 
 def get_connection():
-    conn = psycopg.connect(
-        host=PGHOST,
-        port=PGPORT,
-        dbname=PGDATABASE,
-        user=PGUSER,
-        password=PGPASSWORD or None,
-        sslmode="require",
-        target_session_attrs="read-write",
-        options="-c statement_timeout=30000"
+    db_uri = os.getenv("DATABASE_URL") or (
+        f"postgresql://{PGUSER}:{PGPASSWORD}@{PGHOST}:{PGPORT}/{PGDATABASE}?sslmode=require"
     )
+    conn = psycopg.connect(db_uri)
     register_vector(conn)
-    return conn
+
 
 def encode_texts(model, texts):
     if isinstance(texts, str):
