@@ -34,6 +34,7 @@ def ensure_vector_extension():
         dbname=PGDATABASE,
         user=PGUSER,
         password=PGPASSWORD or None,
+        sslmode="require",
     ) as conn:
         with conn.cursor() as cur:
             cur.execute("CREATE EXTENSION IF NOT EXISTS vector;")
@@ -46,6 +47,7 @@ def get_connection():
         dbname=PGDATABASE,
         user=PGUSER,
         password=PGPASSWORD or None,
+        sslmode="require",
     )
     register_vector(conn)
     return conn
