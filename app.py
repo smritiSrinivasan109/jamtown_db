@@ -48,6 +48,8 @@ def get_connection():
         user=PGUSER,
         password=PGPASSWORD or None,
         sslmode="require",
+        target_session_attrs="read-write",
+        options="-c statement_timeout=30000"
     )
     register_vector(conn)
     return conn
