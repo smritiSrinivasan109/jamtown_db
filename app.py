@@ -44,6 +44,7 @@ def get_connection():
     )
     conn = psycopg.connect(db_uri)
     register_vector(conn)
+    return conn
 
 
 def encode_texts(model, texts):
